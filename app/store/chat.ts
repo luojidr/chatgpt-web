@@ -175,10 +175,16 @@ export const useChatStore = createPersistStore(
 
     function getRunId() {
       let params = getUrlParameters(window.location.href)
-      console.log(`getRunId => url: ${window.location.href}`)
-      console.log(params)
+      console.log(`Current url => ${window.location.href}, runId: ${params.runId}`)
 
       return params.runId || "";
+    }
+
+    function getModelType() {
+      let params = getUrlParameters(window.location.href)
+      console.log(`Current url => ${window.location.href}, runId: ${params.modelType}`)
+
+      return params.modelType || "gpt-4o";
     }
 
     const methods = {
@@ -383,7 +389,7 @@ export const useChatStore = createPersistStore(
         // make request
         api.llm.chat({
           messages: sendMessages,
-          config: { ...modelConfig, stream: true, runId: getRunId() },
+          config: { ...modelConfig, stream: true, runId: getRunId(), modelType: getModelType() },
           onUpdate(message) {
             botMessage.streaming = true;
             if (message) {
@@ -587,7 +593,8 @@ export const useChatStore = createPersistStore(
             config: {
               model: getSummarizeModel(session.mask.modelConfig.model),
               stream: false,
-              runId: getRunId()
+              runId: getRunId(),
+              modelType: getModelType()
             },
             onFinish(message) {
               get().updateCurrentSession(
@@ -650,6 +657,7 @@ export const useChatStore = createPersistStore(
               stream: true,
               model: getSummarizeModel(session.mask.modelConfig.model),
               runId: getRunId(),
+              modelType: getModelType(),
             },
             onUpdate(message) {
               session.memoryPrompt = message;

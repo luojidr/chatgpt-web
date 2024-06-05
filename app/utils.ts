@@ -268,7 +268,8 @@ export function isVisionModel(model: string) {
 
 export function getUrlParameters(url) {
   let params = {
-    runId: ""
+    runId: "",
+    modelType: "gpt-4o",
   };
 
   // 使用正则表达式分离出查询字符串部分（包括哈希中的部分）

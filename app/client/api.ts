@@ -36,6 +36,7 @@ export interface LLMConfig {
   presence_penalty?: number;
   frequency_penalty?: number;
   runId?: string;
+  modelType?: string;
 }
 
 export interface ChatOptions {
