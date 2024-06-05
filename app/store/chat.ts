@@ -256,6 +256,20 @@ export const useChatStore = createPersistStore(
         get().selectSession(limit(i + delta));
       },
 
+      stayOneNewSession() {
+        const sessions = get().sessions.slice();
+        if (sessions.length === 0) {
+          return
+        }
+
+        sessions.splice(0);
+        sessions.push(createEmptySession());
+        set(() => ({
+          currentSessionIndex: 0,
+          sessions,
+        }));
+      },
+
       deleteSession(index: number) {
         const deletingLastSession = get().sessions.length === 1;
         const deletedSession = get().sessions.at(index);

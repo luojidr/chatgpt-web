@@ -91,7 +91,7 @@ import {
 } from "../constant";
 import { Avatar } from "./emoji";
 import { ContextPrompts, MaskAvatar, MaskConfig } from "./mask";
-import { useMaskStore } from "../store/mask";
+import {Mask, useMaskStore} from "../store/mask";
 import { ChatCommandPrefix, useChatCommand, useCommand } from "../command";
 import { prettyObject } from "../utils/format";
 import { ExportMessageModal } from "./exporter";
@@ -828,6 +828,12 @@ function _Chat() {
         console.log("[Mask] syncing from global, name = ", session.mask.name);
         session.mask.modelConfig = { ...config.modelConfig };
       }
+
+      setTimeout(() => {
+        chatStore.stayOneNewSession()
+        console.log(`新开启一个聊天: ${Path.Chat}`);
+      }, 50);
+
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
