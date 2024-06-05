@@ -176,25 +176,25 @@ function PromptToast(props: {
   const session = chatStore.currentSession();
   const context = session.mask.context;
 
-  return (
-    <div className={styles["prompt-toast"]} key="prompt-toast">
-      {props.showToast && (
-        <div
-          className={styles["prompt-toast-inner"] + " clickable"}
-          role="button"
-          onClick={() => props.setShowModal(true)}
-        >
-          <BrainIcon />
-          <span className={styles["prompt-toast-content"]}>
-            {Locale.Context.Toast(context.length)}
-          </span>
-        </div>
-      )}
-      {props.showModal && (
-        <SessionConfigModel onClose={() => props.setShowModal(false)} />
-      )}
-    </div>
-  );
+  // return (
+  //   <div className={styles["prompt-toast"]} key="prompt-toast">
+  //     {props.showToast && (
+  //       <div
+  //         className={styles["prompt-toast-inner"] + " clickable"}
+  //         role="button"
+  //         onClick={() => props.setShowModal(true)}
+  //       >
+  //         <BrainIcon />
+  //         <span className={styles["prompt-toast-content"]}>
+  //           {Locale.Context.Toast(context.length)}
+  //         </span>
+  //       </div>
+  //     )}
+  //     {props.showModal && (
+  //       <SessionConfigModel onClose={() => props.setShowModal(false)} />
+  //     )}
+  //   </div>
+  // );
 }
 
 function useSubmitHandler() {
@@ -505,13 +505,13 @@ export function ChatActions(props: {
           icon={<BottomIcon />}
         />
       )}
-      {props.hitBottom && (
+      {/* {props.hitBottom && (
         <ChatAction
           onClick={props.showPromptModal}
           text={Locale.Chat.InputActions.Settings}
           icon={<SettingsIcon />}
         />
-      )}
+      )} */}
 
       {showUploadImage && (
         <ChatAction
@@ -565,11 +565,11 @@ export function ChatActions(props: {
         }}
       />
 
-      <ChatAction
+      {/* <ChatAction
         onClick={() => setShowModelSelector(true)}
         text={currentModel}
         icon={<RobotIcon />}
-      />
+      /> */}
       {showModelSelector && (
         <Selector
           defaultSelectedValue={currentModel}
@@ -1268,11 +1268,11 @@ function _Chat() {
           )}
         </div>
 
-        <PromptToast
+        {/* <PromptToast
           showToast={!hitBottom}
           showModal={showPromptModal}
           setShowModal={setShowPromptModal}
-        />
+        /> */}
       </div>
 
       <div
