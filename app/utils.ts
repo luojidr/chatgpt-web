@@ -264,3 +264,34 @@ export function isVisionModel(model: string) {
     visionKeywords.some((keyword) => model.includes(keyword)) || isGpt4Turbo
   );
 }
+
+
+export function getUrlParameters(url) {
+  let params = {
+    runId: ""
+  };
+
+  // 使用正则表达式分离出查询字符串部分（包括哈希中的部分）
+  let queryString = url.split('?')[1] || '';
+  queryString = queryString.split('#')[0] || '';
+
+  // 如果存在哈希部分，并且哈希中包含查询字符串
+  let hashIndex = url.indexOf('#');
+  if (hashIndex !== -1) {
+    let hashString = url.substring(hashIndex + 1);
+    let hashQueryIndex = hashString.indexOf('?');
+    if (hashQueryIndex !== -1) {
+      queryString += '&' + hashString.substring(hashQueryIndex + 1);
+    }
+  }
+
+  // 使用URLSearchParams解析查询字符串
+  let searchParams = new URLSearchParams(queryString);
+
+  // 遍历所有的键值对并存入params对象中
+  for (let [key, value] of searchParams.entries()) {
+    params[key] = value;
+  }
+
+  return params;
+}
