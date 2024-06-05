@@ -1,4 +1,4 @@
-import { trimTopic, getMessageTextContent } from "../utils";
+import {trimTopic, getMessageTextContent, getUrlParameters} from "../utils";
 
 import Locale, { getLang } from "../locales";
 import { showToast } from "../components/ui-lib";
@@ -171,6 +171,20 @@ export const useChatStore = createPersistStore(
         ..._get(),
         ...methods,
       };
+    }
+
+    function getRunId() {
+      let params = getUrlParameters(window.location.href)
+      console.log(`Current url => ${window.location.href}, runId: ${params.runId}`)
+
+      return params.runId || "";
+    }
+
+    function getModelType() {
+      let params = getUrlParameters(window.location.href)
+      console.log(`Current url => ${window.location.href}, runId: ${params.modelType}`)
+
+      return params.modelType || "gpt-4o";
     }
 
     const methods = {
@@ -375,7 +389,7 @@ export const useChatStore = createPersistStore(
         // make request
         api.llm.chat({
           messages: sendMessages,
-          config: { ...modelConfig, stream: true },
+          config: { ...modelConfig, stream: true, runId: getRunId(), modelType: getModelType() },
           onUpdate(message) {
             botMessage.streaming = true;
             if (message) {
@@ -572,11 +586,15 @@ export const useChatStore = createPersistStore(
               content: Locale.Store.Prompt.Topic,
             }),
           );
+          console.log('pppppppppppppppppppppp')
+          console.log(session)
           api.llm.chat({
             messages: topicMessages,
             config: {
               model: getSummarizeModel(session.mask.modelConfig.model),
               stream: false,
+              runId: getRunId(),
+              modelType: getModelType()
             },
             onFinish(message) {
               get().updateCurrentSession(
@@ -638,6 +656,8 @@ export const useChatStore = createPersistStore(
               ...modelcfg,
               stream: true,
               model: getSummarizeModel(session.mask.modelConfig.model),
+              runId: getRunId(),
+              modelType: getModelType(),
             },
             onUpdate(message) {
               session.memoryPrompt = message;

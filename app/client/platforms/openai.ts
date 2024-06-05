@@ -52,6 +52,8 @@ interface RequestPayload {
   frequency_penalty: number;
   top_p: number;
   max_tokens?: number;
+  runId?: string;
+  modelType?: string;
 }
 
 export class ChatGPTApi implements LLMApi {
@@ -118,8 +120,11 @@ export class ChatGPTApi implements LLMApi {
 
     const requestPayload: RequestPayload = {
       messages,
+      runId: options.config.runId || "",
+      modelType: options.config.modelType || "",
       stream: options.config.stream,
-      model: modelConfig.model,
+      // model: modelConfig.model,
+      model: options.config.modelType,
       temperature: modelConfig.temperature,
       presence_penalty: modelConfig.presence_penalty,
       frequency_penalty: modelConfig.frequency_penalty,
