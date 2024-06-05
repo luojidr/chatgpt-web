@@ -91,7 +91,7 @@ import {
 } from "../constant";
 import { Avatar } from "./emoji";
 import { ContextPrompts, MaskAvatar, MaskConfig } from "./mask";
-import { useMaskStore } from "../store/mask";
+import {Mask, useMaskStore} from "../store/mask";
 import { ChatCommandPrefix, useChatCommand, useCommand } from "../command";
 import { prettyObject } from "../utils/format";
 import { ExportMessageModal } from "./exporter";
@@ -828,6 +828,12 @@ function _Chat() {
         console.log("[Mask] syncing from global, name = ", session.mask.name);
         session.mask.modelConfig = { ...config.modelConfig };
       }
+
+      setTimeout(() => {
+        chatStore.stayOneNewSession()
+        console.log(`新开启一个聊天: ${Path.Chat}`);
+      }, 50);
+
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -1234,15 +1240,15 @@ function _Chat() {
           </div>
         </div>
         <div className="window-actions">
-          {!isMobileScreen && (
-            <div className="window-action-button">
-              <IconButton
-                icon={<RenameIcon />}
-                bordered
-                onClick={() => setIsEditingMessage(true)}
-              />
-            </div>
-          )}
+          {/*{!isMobileScreen && (*/}
+          {/*  <div className="window-action-button">*/}
+          {/*    <IconButton*/}
+          {/*      icon={<RenameIcon />}*/}
+          {/*      bordered*/}
+          {/*      onClick={() => setIsEditingMessage(true)}*/}
+          {/*    />*/}
+          {/*  </div>*/}
+          {/*)}*/}
           <div className="window-action-button">
             <IconButton
               icon={<ExportIcon />}
@@ -1307,38 +1313,38 @@ function _Chat() {
                   <div className={styles["chat-message-header"]}>
                     <div className={styles["chat-message-avatar"]}>
                       <div className={styles["chat-message-edit"]}>
-                        <IconButton
-                          icon={<EditIcon />}
-                          onClick={async () => {
-                            const newMessage = await showPrompt(
-                              Locale.Chat.Actions.Edit,
-                              getMessageTextContent(message),
-                              10,
-                            );
-                            let newContent: string | MultimodalContent[] =
-                              newMessage;
-                            const images = getMessageImages(message);
-                            if (images.length > 0) {
-                              newContent = [{ type: "text", text: newMessage }];
-                              for (let i = 0; i < images.length; i++) {
-                                newContent.push({
-                                  type: "image_url",
-                                  image_url: {
-                                    url: images[i],
-                                  },
-                                });
-                              }
-                            }
-                            chatStore.updateCurrentSession((session) => {
-                              const m = session.mask.context
-                                .concat(session.messages)
-                                .find((m) => m.id === message.id);
-                              if (m) {
-                                m.content = newContent;
-                              }
-                            });
-                          }}
-                        ></IconButton>
+                        {/*<IconButton*/}
+                        {/*  icon={<EditIcon />}*/}
+                        {/*  onClick={async () => {*/}
+                        {/*    const newMessage = await showPrompt(*/}
+                        {/*      Locale.Chat.Actions.Edit,*/}
+                        {/*      getMessageTextContent(message),*/}
+                        {/*      10,*/}
+                        {/*    );*/}
+                        {/*    let newContent: string | MultimodalContent[] =*/}
+                        {/*      newMessage;*/}
+                        {/*    const images = getMessageImages(message);*/}
+                        {/*    if (images.length > 0) {*/}
+                        {/*      newContent = [{ type: "text", text: newMessage }];*/}
+                        {/*      for (let i = 0; i < images.length; i++) {*/}
+                        {/*        newContent.push({*/}
+                        {/*          type: "image_url",*/}
+                        {/*          image_url: {*/}
+                        {/*            url: images[i],*/}
+                        {/*          },*/}
+                        {/*        });*/}
+                        {/*      }*/}
+                        {/*    }*/}
+                        {/*    chatStore.updateCurrentSession((session) => {*/}
+                        {/*      const m = session.mask.context*/}
+                        {/*        .concat(session.messages)*/}
+                        {/*        .find((m) => m.id === message.id);*/}
+                        {/*      if (m) {*/}
+                        {/*        m.content = newContent;*/}
+                        {/*      }*/}
+                        {/*    });*/}
+                        {/*  }}*/}
+                        {/*></IconButton>*/}
                       </div>
                       {isUser ? (
                         <Avatar avatar={config.avatar} />
@@ -1381,11 +1387,11 @@ function _Chat() {
                                 onClick={() => onDelete(message.id ?? i)}
                               />
 
-                              <ChatAction
-                                text={Locale.Chat.Actions.Pin}
-                                icon={<PinIcon />}
-                                onClick={() => onPinMessage(message)}
-                              />
+                              {/*<ChatAction*/}
+                              {/*  text={Locale.Chat.Actions.Pin}*/}
+                              {/*  icon={<PinIcon />}*/}
+                              {/*  onClick={() => onPinMessage(message)}*/}
+                              {/*/>*/}
                               <ChatAction
                                 text={Locale.Chat.Actions.Copy}
                                 icon={<CopyIcon />}
