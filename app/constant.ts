@@ -136,13 +136,7 @@ export const KnowledgeCutOffDate: Record<string, string> = {
   "gemini-pro-vision": "2023-12",
 };
 
-const openaiModels = [
-  "gpt-3.5-turbo",
-  "gpt-3.5-turbo-16k",
-  "gpt-4",
-  "gpt-4-32k",
-  "gpt-4o",
-];
+const openaiModels = ["gpt-4o"];
 
 const googleModels = [
   "gemini-1.0-pro",
