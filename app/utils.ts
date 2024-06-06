@@ -266,7 +266,7 @@ export function isVisionModel(model: string) {
 }
 
 
-export function getUrlParameters(url) {
+export function getUrlParameters(url: string) {
   let params = {
     runId: "",
     modelType: "gpt-4o",
