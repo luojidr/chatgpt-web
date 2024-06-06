@@ -6,6 +6,16 @@ if ('serviceWorker' in navigator) {
       console.error('ServiceWorker registration failed: ', err);
     });
   });
+
+  window.addEventListener("hashchange", function () {
+    console.log('hashchange: ', window.location.hash);
+    window.location.reload();
+    // var iframe = document.getElementById('chat-iframe');
+    // var hash = window.location.hash;
+    // if (hash) {
+    //   iframe.src = iframe.dataset.baseSrc + hash;
+    // }
+  })
 }
 
 function getUniqueString(length) {
