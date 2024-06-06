@@ -485,7 +485,8 @@ export function ChatActions(props: {
       chatStore.updateCurrentSession(
         (session) => (session.mask.modelConfig.model = nextModel),
       );
-      showToast(nextModel);
+      // showToast(nextModel);
+      console.log(`nextModel: ${nextModel}`)
     }
   }, [chatStore, currentModel, models]);
 
