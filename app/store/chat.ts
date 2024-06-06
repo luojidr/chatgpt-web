@@ -1,4 +1,4 @@
-import {trimTopic, getMessageTextContent, getUrlParameters} from "../utils";
+import { trimTopic, getMessageTextContent, getUrlParameters } from "../utils";
 
 import Locale, { getLang } from "../locales";
 import { showToast } from "../components/ui-lib";
@@ -174,15 +174,19 @@ export const useChatStore = createPersistStore(
     }
 
     function getRunId() {
-      let params = getUrlParameters(window.location.href)
-      console.log(`Current url => ${window.location.href}, runId: ${params.runId}`)
+      let params = getUrlParameters(window.location.href);
+      console.log(
+        `Current url => ${window.location.href}, runId: ${params.runId}`,
+      );
 
       return params.runId || "";
     }
 
     function getModelType() {
-      let params = getUrlParameters(window.location.href)
-      console.log(`Current url => ${window.location.href}, runId: ${params.modelType}`)
+      let params = getUrlParameters(window.location.href);
+      console.log(
+        `Current url => ${window.location.href}, runId: ${params.modelType}`,
+      );
 
       return params.modelType || "gpt-4o";
     }
@@ -259,7 +263,7 @@ export const useChatStore = createPersistStore(
       stayOneNewSession() {
         const sessions = get().sessions.slice();
         if (sessions.length === 0) {
-          return
+          return;
         }
 
         sessions.splice(0);
@@ -403,7 +407,12 @@ export const useChatStore = createPersistStore(
         // make request
         api.llm.chat({
           messages: sendMessages,
-          config: { ...modelConfig, stream: true, runId: getRunId(), modelType: getModelType() },
+          config: {
+            ...modelConfig,
+            stream: true,
+            runId: getRunId(),
+            modelType: getModelType(),
+          },
           onUpdate(message) {
             botMessage.streaming = true;
             if (message) {
@@ -594,21 +603,15 @@ export const useChatStore = createPersistStore(
           session.topic === DEFAULT_TOPIC &&
           countMessages(messages) >= SUMMARIZE_MIN_LEN
         ) {
-          const topicMessages = messages.concat(
-            createMessage({
-              role: "user",
-              content: Locale.Store.Prompt.Topic,
-            }),
-          );
-          console.log('pppppppppppppppppppppp')
-          console.log(session)
+          const topicMessages = messages.concat();
+          console.log(session);
           api.llm.chat({
             messages: topicMessages,
             config: {
               model: getSummarizeModel(session.mask.modelConfig.model),
               stream: false,
               runId: getRunId(),
-              modelType: getModelType()
+              modelType: getModelType(),
             },
             onFinish(message) {
               get().updateCurrentSession(
