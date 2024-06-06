@@ -1213,6 +1213,10 @@ function _Chat() {
     setAttachImages(images);
   }
 
+  const startWriting = () => {
+    chatStore.onUserInput("开始创作");
+  }
+
   return (
     <div className={styles.chat} key={session.id}>
       <div className="window-header" data-tauri-drag-region>
@@ -1430,6 +1434,9 @@ function _Chat() {
                       parentRef={scrollRef}
                       defaultShow={i >= messages.length - 6}
                     />
+                    {i == 0 && (
+                      <button onClick={startWriting} className={styles["chat-message-item-create-one"]}>开始创作</button>
+                    )}
                     {getMessageImages(message).length == 1 && (
                       <img
                         className={styles["chat-message-item-image"]}

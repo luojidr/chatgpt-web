@@ -625,3 +625,15 @@
     bottom: 30px;
   }
 }
+
+.chat-message-item-create-one {
+  margin-left: 0px;
+  padding: 5px 10px;
+  background-color: white;
+  color: #007bff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
