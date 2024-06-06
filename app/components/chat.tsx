@@ -91,7 +91,7 @@ import {
 } from "../constant";
 import { Avatar } from "./emoji";
 import { ContextPrompts, MaskAvatar, MaskConfig } from "./mask";
-import {Mask, useMaskStore} from "../store/mask";
+import { Mask, useMaskStore } from "../store/mask";
 import { ChatCommandPrefix, useChatCommand, useCommand } from "../command";
 import { prettyObject } from "../utils/format";
 import { ExportMessageModal } from "./exporter";
@@ -486,7 +486,7 @@ export function ChatActions(props: {
         (session) => (session.mask.modelConfig.model = nextModel),
       );
       // showToast(nextModel);
-      console.log(`nextModel: ${nextModel}`)
+      console.log(`nextModel: ${nextModel}`);
     }
   }, [chatStore, currentModel, models]);
 
@@ -831,10 +831,9 @@ function _Chat() {
       }
 
       setTimeout(() => {
-        chatStore.stayOneNewSession()
+        chatStore.stayOneNewSession();
         console.log(`新开启一个聊天: ${Path.Chat}`);
       }, 50);
-
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -1214,8 +1213,8 @@ function _Chat() {
   }
 
   const startWriting = () => {
-    chatStore.onUserInput("开始创作");
-  }
+    chatStore.onUserInput("起飞");
+  };
 
   return (
     <div className={styles.chat} key={session.id}>
@@ -1435,7 +1434,12 @@ function _Chat() {
                       defaultShow={i >= messages.length - 6}
                     />
                     {i == 0 && (
-                      <button onClick={startWriting} className={styles["chat-message-item-create-one"]}>开始创作</button>
+                      <button
+                        onClick={startWriting}
+                        className={styles["chat-message-item-create-one"]}
+                      >
+                        起飞
+                      </button>
                     )}
                     {getMessageImages(message).length == 1 && (
                       <img
