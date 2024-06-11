@@ -8,6 +8,7 @@ import { ModelType } from "../store";
 
 import BotIcon from "../icons/bot.svg";
 import BlackBotIcon from "../icons/yf_chat.svg";
+import UserChatIcon from "../icons/user_chat.svg";
 
 export function getEmojiUrl(unified: string, style: EmojiStyle) {
   // Whoever owns this Content Delivery Network (CDN), I am using your CDN to serve emojis
@@ -33,13 +34,14 @@ export function AvatarPicker(props: {
 }
 
 export function Avatar(props: { model?: ModelType; avatar?: string }) {
+  console.log(props);
   if (props.model) {
     return (
       <div className="no-dark">
         {props.model?.startsWith("gpt-4") ? (
           <BlackBotIcon
             className="user-avatar"
-            style={{ width: "50px", height: "50px" }}
+            style={{ width: "40px", height: "40px" }}
           />
         ) : (
           <BotIcon
@@ -52,12 +54,15 @@ export function Avatar(props: { model?: ModelType; avatar?: string }) {
   }
 
   return (
-    <div className="user-avatar">
-      {props.avatar && <EmojiAvatar avatar={props.avatar} />}
+    <div className="no-dark">
+      <UserChatIcon
+        className="user-avatar"
+        style={{ width: "40px", height: "40px" }}
+      />
     </div>
   );
 }
 
 export function EmojiAvatar(props: { avatar: string; size?: number }) {
-  return <Emoji unified={props.avatar} size={50} getEmojiUrl={getEmojiUrl} />;
+  return <Emoji unified={props.avatar} size={40} getEmojiUrl={getEmojiUrl} />;
 }
