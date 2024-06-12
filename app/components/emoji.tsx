@@ -34,7 +34,6 @@ export function AvatarPicker(props: {
 }
 
 export function Avatar(props: { model?: ModelType; avatar?: string }) {
-  console.log(props);
   if (props.model) {
     return (
       <div className="no-dark">
