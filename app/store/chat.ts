@@ -174,7 +174,9 @@ export const useChatStore = createPersistStore(
     }
 
     function getRunId() {
+      console.log(window.location.href);
       let params = getUrlParameters(window.location.href);
+      console.log(params);
       console.log(
         `Current url => ${window.location.href}, runId: ${params.runId}`,
       );
