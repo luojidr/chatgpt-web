@@ -23,7 +23,7 @@ import CopyIcon from "../icons/copy.svg";
 import LoadingIcon from "../icons/three-dots.svg";
 import ChatGptIcon from "../icons/chatgpt.png";
 import ShareIcon from "../icons/share.svg";
-import BotIcon from "../icons/bot.png";
+import BotIcon from "../icons/yf_chat.png";
 
 import DownloadIcon from "../icons/download.svg";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -387,13 +387,13 @@ export function PreviewActions(props: {
           icon={<DownloadIcon />}
           onClick={props.download}
         ></IconButton>
-        <IconButton
+        {/* <IconButton
           text={Locale.Export.Share}
           bordered
           shadow
           icon={loading ? <LoadingIcon /> : <ShareIcon />}
           onClick={share}
-        ></IconButton>
+        ></IconButton> */}
       </div>
       <div
         style={{
@@ -536,7 +536,7 @@ export function ImagePreviewer(props: {
         className={`${styles["preview-body"]} ${styles["default-theme"]}`}
         ref={previewRef}
       >
-        <div className={styles["chat-info"]}>
+        {/* <div className={styles["chat-info"]}>
           <div className={styles["logo"] + " no-dark"}>
             <NextImage
               src={ChatGptIcon.src}
@@ -572,9 +572,9 @@ export function ImagePreviewer(props: {
               {new Date(
                 props.messages.at(-1)?.date ?? Date.now(),
               ).toLocaleString()}
-            </div>
-          </div>
-        </div>
+            </div> */}
+        {/* </div> */}
+        {/* </div> */}
         {props.messages.map((m, i) => {
           return (
             <div
