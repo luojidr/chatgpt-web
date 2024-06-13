@@ -655,44 +655,44 @@ export const useChatStore = createPersistStore(
           modelConfig.compressMessageLengthThreshold,
         );
 
-        if (
-          historyMsgLength > modelConfig.compressMessageLengthThreshold &&
-          modelConfig.sendMemory
-        ) {
-          /** Destruct max_tokens while summarizing
-           * this param is just shit
-           **/
-          const { max_tokens, ...modelcfg } = modelConfig;
-          api.llm.chat({
-            messages: toBeSummarizedMsgs.concat(
-              createMessage({
-                role: "system",
-                content: Locale.Store.Prompt.Summarize,
-                date: "",
-              }),
-            ),
-            config: {
-              ...modelcfg,
-              stream: true,
-              model: getSummarizeModel(session.mask.modelConfig.model),
-              runId: getRunId(),
-              modelType: getModelType(),
-            },
-            onUpdate(message) {
-              session.memoryPrompt = message;
-            },
-            onFinish(message) {
-              console.log("[Memory] ", message);
-              get().updateCurrentSession((session) => {
-                session.lastSummarizeIndex = lastSummarizeIndex;
-                session.memoryPrompt = message; // Update the memory prompt for stored it in local storage
-              });
-            },
-            onError(err) {
-              console.error("[Summarize] ", err);
-            },
-          });
-        }
+        // if (
+        //   historyMsgLength > modelConfig.compressMessageLengthThreshold &&
+        //   modelConfig.sendMemory
+        // ) {
+        //   /** Destruct max_tokens while summarizing
+        //    * this param is just shit
+        //    **/
+        //   const { max_tokens, ...modelcfg } = modelConfig;
+        //   api.llm.chat({
+        //     messages: toBeSummarizedMsgs.concat(
+        //       createMessage({
+        //         role: "system",
+        //         content: Locale.Store.Prompt.Summarize,
+        //         date: "",
+        //       }),
+        //     ),
+        //     config: {
+        //       ...modelcfg,
+        //       stream: true,
+        //       model: getSummarizeModel(session.mask.modelConfig.model),
+        //       runId: getRunId(),
+        //       modelType: getModelType(),
+        //     },
+        //     onUpdate(message) {
+        //       session.memoryPrompt = message;
+        //     },
+        //     onFinish(message) {
+        //       console.log("[Memory] ", message);
+        //       get().updateCurrentSession((session) => {
+        //         session.lastSummarizeIndex = lastSummarizeIndex;
+        //         session.memoryPrompt = message; // Update the memory prompt for stored it in local storage
+        //       });
+        //     },
+        //     onError(err) {
+        //       console.error("[Summarize] ", err);
+        //     },
+        //   });
+        // }
       },
 
       updateStat(message: ChatMessage) {
