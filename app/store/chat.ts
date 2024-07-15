@@ -339,7 +339,7 @@ export const useChatStore = createPersistStore(
           session.lastUpdate = Date.now();
         });
         get().updateStat(message);
-        get().summarizeSession();
+        // get().summarizeSession();
       },
 
       async onUserInput(content: string, attachImages?: string[]) {
@@ -521,10 +521,7 @@ export const useChatStore = createPersistStore(
         const longTermMemoryStartIndex = session.lastSummarizeIndex;
 
         // short term memory
-        const shortTermMemoryStartIndex = Math.max(
-          0,
-          totalMessageCount - modelConfig.historyMessageCount,
-        );
+        const shortTermMemoryStartIndex = 0;
 
         // lets concat send messages, including 4 parts:
         // 0. system prompt: to get close to OpenAI Web ChatGPT
@@ -537,26 +534,21 @@ export const useChatStore = createPersistStore(
           : shortTermMemoryStartIndex;
         // and if user has cleared history messages, we should exclude the memory too.
         const contextStartIndex = Math.max(clearContextIndex, memoryStartIndex);
-        const maxTokenThreshold = modelConfig.max_tokens;
 
-        // get recent messages as much as possible
-        const reversedRecentMessages = [];
-        for (
-          let i = totalMessageCount - 1, tokenCount = 0;
-          i >= contextStartIndex && tokenCount < maxTokenThreshold;
-          i -= 1
-        ) {
+        // get all messages
+        const allMessages = [];
+        for (let i = totalMessageCount - 1; i >= contextStartIndex; i -= 1) {
           const msg = messages[i];
           if (!msg || msg.isError) continue;
-          tokenCount += estimateTokenLength(getMessageTextContent(msg));
-          reversedRecentMessages.push(msg);
+          allMessages.push(msg);
         }
+
         // concat all messages
         const recentMessages = [
           // ...systemPrompts,
           ...longTermMemoryPrompts,
           ...contextPrompts,
-          ...reversedRecentMessages.reverse(),
+          ...allMessages.reverse(),
         ];
 
         return recentMessages;
